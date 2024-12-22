@@ -1,0 +1,4 @@
+.env
+domains.txt
+.vscode
+__pycache__

@@ -1,0 +1,29 @@
+---
+name: DomainPrompt
+description: Prompt for finding domain names
+authors:
+  - Vincent Giraud
+model:
+  api: chat
+  configuration:
+    type: azure_openai
+    azure_deployment: ${env:AZURE_OPENAI_DEPLOYMENT}
+    # Use below if Prompty VSC extension config not set 
+    azure_endpoint: ${env:AZURE_OPENAI_ENDPOINT}
+    # api_version: ${env:AZURE_OPENAI_API_VERSION}
+    # /!\ A cognitive contributor member identity for the openAI service is used in instead of the api key"
+  parameters:
+    max_tokens: 16000
+    temperature: 0
+sample:
+  domains: ${file:domains.txt}
+---
+
+system:
+You are an AI assistant that helps people evaluate the best domain name: catchy for branding and easy to spell around the world. 
+You are provided with a list of domains. 
+Explain why by category with pros and cons, scores. Spot if any are awkward or non safe for work.
+Make sure you consider the full list from start to finish.
+
+user:
+{{domains}}
