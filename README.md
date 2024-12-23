@@ -1,12 +1,14 @@
 # Domain copilot
 
-Finds available domain names using Azure OpenAI and GoDaddy APIs.
+Finds available and appealing domain names using Azure OpenAI, Azure Speech and GoDaddy APIs.
 
-## Configuration
-Create a `.env` file from `example.env` and fill out your API information.
+## Setup
+Create a `.env` file from `example.env` and fill out your API information.  
+Create a virtual Python environment: `python3.12 -m venv .venv`  
+Install python modules: `pip install requirements.txt`
 
 ## Generate domain names
-`.conda/bin/python main.py`
+`python3.12 main.py`
 
 ## Evaluate domain names
 Run `evaluate_domain.prompty` using the [Prompty Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.prompty)

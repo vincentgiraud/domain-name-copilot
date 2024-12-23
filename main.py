@@ -1,4 +1,4 @@
-from utils import check_domains_availability, find_domain, extract_domain_names
+from utils import check_domains_availability, find_domain, extract_domain_names, text_to_speech
 import logging
 import json
 import time
@@ -25,6 +25,10 @@ if __name__ == "__main__":
                     availability = check_domains_availability(listed_domains)
                     for domain, price in availability.items():
                         logging.info(f"{domain} available at: {price}")
+                        
+                        # text to speech
+                        text_to_speech(domain)
+
                         # save available domains in file
                         with open("domains.txt", "a+") as domain_file:
                             file_contents = domain_file.read()

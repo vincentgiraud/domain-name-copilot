@@ -2,6 +2,7 @@ import requests
 import logging
 # import http.client as http_client
 import os
+import azure.cognitiveservices.speech as speechsdk
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -98,3 +99,36 @@ def check_domains_availability(domains):
     except requests.exceptions.RequestException as e:
         logging.error(f"Error while checking domain availability: {e}")
         return {}
+
+def text_to_speech(text):
+    """
+    Convert text to speech using Azure Cognitive Services.
+
+    Args:
+        text (str): The text to be converted to speech.
+    
+    Returns:
+        None
+
+    Raises:
+        Exception: If there is an error during speech synthesis.
+
+    Logs:
+        Info: When speech synthesis is completed successfully.
+        Error: When speech synthesis is canceled or if there are error details.
+    """
+    
+    subscription_key = os.environ.get("AZURE_SPEECH_TTS_KEY")
+    region=os.environ.get("AZURE_SPEECH_TTS_REGION")
+    speech_config = speechsdk.SpeechConfig(subscription=subscription_key, region=region)
+    audio_config = speechsdk.audio.AudioOutputConfig(use_default_speaker=True)
+    synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+    result = synthesizer.speak_text_async(text).get()
+
+    if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
+        logging.info("Speech synthesized for text [{}]".format(text))
+    elif result.reason == speechsdk.ResultReason.Canceled:
+        cancellation_details = result.cancellation_details
+        logging.error("Speech synthesis canceled: {}".format(cancellation_details.reason))
+        if cancellation_details.reason == speechsdk.CancellationReason.Error:
+            logging.error("Error details: {}".format(cancellation_details.error_details))
