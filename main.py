@@ -1,7 +1,9 @@
 from utils import check_domains_availability, find_domain, extract_domain_names, text_to_speech
+from pydantic import TypeAdapter
 import logging
 import json
 import time
+import os
 
 # Configure logging  
 logging.basicConfig(level=logging.INFO) 
@@ -27,13 +29,17 @@ if __name__ == "__main__":
                         logging.info(f"{domain} available at: {price}")
                         
                         # text to speech
-                        text_to_speech(domain)
+                        if TypeAdapter(bool).validate_python(os.environ.get("VOICE_ON", 'false')):
+                            text_to_speech(domain)
 
                         # save available domains in file
-                        with open("domains.txt", "a+") as domain_file:
-                            file_contents = domain_file.read()
-                            if domain not in file_contents:
+                        with open("domains.txt", "r+") as domain_file:
+                            lines = domain_file.readlines()
+                            if domain not in lines:
                                 domain_file.write(domain+", ")
+                            else:
+                                logging.warning(f"Domain {domain} already in file")           
+                                
                 except TypeError as e:
                     logging.error(f"Type error while checking domain availability: {e}")
 

@@ -7,6 +7,9 @@ Create a `.env` file from `example.env` and fill out your API information.
 Create a virtual Python environment: `python3.12 -m venv .venv`  
 Install python modules: `pip install requirements.txt`
 
+## Configure
+Adapt system prompt in `find_domains.prompty` and `user.md` to your needs and test against an example.
+
 ## Generate domain names
 `python3.12 main.py`
 
