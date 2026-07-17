@@ -4,7 +4,7 @@ Finds available and appealing domain names using Azure OpenAI, Azure Speech and 
 
 ## Setup
 Create a `.env` file from `example.env` and fill out your API information.  
-Create a virtual Python environment: `python3.12 -m venv .venv`  
+Create a virtual Python environment: `python3.12 -m venv .venv` then activate `source .venv/bin/activate`.
 Install python modules: `pip install requirements.txt`
 
 ## Configure

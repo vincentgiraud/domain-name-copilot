@@ -10,9 +10,6 @@ logging.basicConfig(level=logging.INFO)
 
 if __name__ == "__main__":
 
-    # from promptflow.tracing import start_trace
-    # start_trace()
-
     with open("user.md", "r", encoding="utf-8") as file:  
         content = file.read()
 
@@ -33,9 +30,10 @@ if __name__ == "__main__":
                             text_to_speech(domain)
 
                         # save available domains in file
-                        with open("domains.txt", "r+") as domain_file:
+                        with open("domains.txt", "a+") as domain_file:
+                            domain_file.seek(0)
                             lines = domain_file.readlines()
-                            if domain not in lines:
+                            if domain + ", " not in lines:
                                 domain_file.write(domain+", ")
                             else:
                                 logging.warning(f"Domain {domain} already in file")           

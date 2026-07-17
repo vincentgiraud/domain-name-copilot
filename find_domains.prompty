@@ -6,14 +6,14 @@ authors:
 model:
   api: chat
   configuration:
-    type: azure_openai
-    azure_deployment: ${env:AZURE_OPENAI_DEPLOYMENT}
-    # Use below if Prompty VSC extension config not set 
-    azure_endpoint: ${env:AZURE_OPENAI_ENDPOINT}
-    # api_version: ${env:AZURE_OPENAI_API_VERSION}
+    type: openai
+    # Use below if Prompty VSC extension config not set
+    base_url: ${env:AZURE_OPENAI_ENDPOINT}
+    api_key: ${env:AZURE_OPENAI_API_KEY}
+    model: ${env:AZURE_OPENAI_DEPLOYMENT}
     # /!\ A cognitive contributor member identity for the openAI service is used in instead of the api key"
   parameters:
-    max_tokens: 3000
+    max_completion_tokens: 3000
     temperature: 1
     response_format: { type: "json_object" }
 sample:

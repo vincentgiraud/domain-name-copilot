@@ -11,6 +11,10 @@ from promptflow.core import Prompty, _errors
 
 BASE_DIR = Path(__file__).absolute().parent
 
+# Always load .env so endpoint/version are available even when the API key
+# is already present in the shell environment.
+load_dotenv()
+
 # @trace
 def find_domain(question: str) -> str:
     """Flow entry function."""
@@ -85,8 +89,9 @@ def check_domains_availability(domains):
 
         # Extract availability information
         availability = {}
+        max_price = int(os.environ["MAX_USD_PRICE"]) if os.environ.get("MAX_USD_PRICE") else float("inf")
         for domain_info in results.get("domains", []):
-            if domain_info["available"] and (int(domain_info["price"]) < int(os.environ["MAX_USD_PRICE"])):
+            if domain_info["available"] and (int(domain_info["price"]) < max_price):
                 logging.debug(f"{domain_info['domain']} available for {domain_info['currency']}{domain_info['price']}")
                 availability[domain_info["domain"]] = domain_info["price"]
             elif domain_info["available"]:
