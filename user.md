@@ -1,1 +1,0 @@
-Generate 25 unique domain name ideas, each a maximum of 14 total characters, that are creative, easy to spell, meaningful and memorable. Respond in JSON format and do not include unavailable or trademarked domain names.
